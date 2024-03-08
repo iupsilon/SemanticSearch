@@ -1,0 +1,8 @@
+docker run -d \
+  --name postgresql \
+  -p 5432:5432 \
+  -e POSTGRES_USER=ai \
+  -e POSTGRES_PASSWORD=XXXX \
+  -e POSTGRES_DB=AIDB \
+  -v 'C:\docker\PostgresSql\':/var/lib/postgresql/data \
+ankane/pgvector
