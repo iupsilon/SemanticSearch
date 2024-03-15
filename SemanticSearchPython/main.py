@@ -9,11 +9,11 @@ from langchain.docstore.document import Document
 from langchain.prompts import PromptTemplate
 from langchain.chains import ConversationalRetrievalChain
 
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/gtr-t5-base")
 
 
 CONNECTION_STRING = PGVector.connection_string_from_db_params("psycopg2","localhost",5432,"AIDB","ai","qwerty,123")
-COLLECTION_NAME = "BOOKS"
+COLLECTION_NAME = "MOVIES-SMALL"
 
 vectorStore = PGVector(
     collection_name=COLLECTION_NAME,
@@ -39,12 +39,12 @@ prompt_template = """
 Film trovato:
 {context} 
 
-Descrivi il racconto in italiano.
+Descrivi il film in italiano.
 
 """
 PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
-retriever = vectorStore.as_retriever(search_type="similarity_score_threshold", search_kwargs={"k": 1, "score_threshold": 0.4})
+retriever = vectorStore.as_retriever(search_type="similarity_score_threshold", search_kwargs={"k": 1, "score_threshold": 0.5})
 
 
 # qa = RetrievalQA.from_chain_type(

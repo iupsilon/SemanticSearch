@@ -1,0 +1,10 @@
+--- Sentence transformers
+
+[4096]
+https://huggingface.co/Salesforce/SFR-Embedding-Mistral
+
+[768]
+https://huggingface.co/sentence-transformers/gtr-t5-base
+
+[1024]
+https://huggingface.co/intfloat/multilingual-e5-large
