@@ -18,7 +18,7 @@ store = PGVector(
 )
 
 from langchain_community.document_loaders.csv_loader import CSVLoader
-csvLoader = CSVLoader(file_path="..\\Dataset\\movies-small.csv", encoding="utf8")
+csvLoader = CSVLoader(file_path="D:\\Samples\\Gilde\\gildaRicercaSemantica\\SemanticSearch\\Dataset\\movies-small.csv", encoding="utf8")
 text_splitter = RecursiveCharacterTextSplitter(chunk_size = 2000, chunk_overlap = 0)
 dataCsv = csvLoader.load_and_split(text_splitter=text_splitter)
 store.add_documents(dataCsv)

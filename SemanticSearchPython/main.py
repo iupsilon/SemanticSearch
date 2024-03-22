@@ -25,7 +25,7 @@ vectorStore = PGVector(
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
 llm = LlamaCpp(
-    model_path ="C:\\Users\\y.melzani\\Downloads\\mistral-7b-instruct-v0.2.Q8_0.gguf",
+    model_path ="D:\\Samples\\Gilde\\gildaRicercaSemantica\\SemanticSearch\\Models\\mistral-7b-instruct-v0.2.Q8_0.gguf",
     # model_path="/home/yari/.cache/lm-studio/models/TheBloke/Llama-2-7B-Chat-GGUF/llama-2-7b-chat.Q8_0.gguf",    
     temperature=0.75,
     max_tokens=2000,
