@@ -1,0 +1,8 @@
+-- NON FUNZIONA -> Utilizzare LM Studio --
+features/hugging-face-tgi-chat-completion
+https://github.com/huggingface/text-generation-inference/pkgs/container/text-generation-inference
+
+
+docker run --gpus all --shm-size 1g -p 8080:80 -v 'C:\docker\Huggingface:/data' ghcr.io/huggingface/text-generation-inference:latest --model-id teknium/OpenHermes-2.5-Mistral-7B
+-- Per avviare senza il supporto cuda:
+docker run --disable-custom-kernels --shm-size 1g -p 8080:80 -v 'C:\docker\Huggingface:/data' ghcr.io/huggingface/text-generation-inference:latest --model-id teknium/OpenHermes-2.5-Mistral-7B
