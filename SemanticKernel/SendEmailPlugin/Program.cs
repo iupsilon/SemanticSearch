@@ -1,13 +1,23 @@
 ﻿// Create the kernel
 
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.HuggingFace;
-using Microsoft.SemanticKernel.Connectors.OpenAI;
-using Microsoft.SemanticKernel.TextGeneration;
+using SendEmailPlugin.Configuration;
+
+var configurationBuilder = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false)
+    .AddUserSecrets<Program>();
+
+IConfiguration config = configurationBuilder.Build();
+
+var openAiConfiguration = config.GetSection("OpenAI").Get<OpenAIConfiguration>();
+
 
 var builder = Kernel.CreateBuilder();
 builder.Services.AddLogging(c => c.SetMinimumLevel(LogLevel.Trace).AddDebug());
@@ -23,10 +33,10 @@ IChatCompletionService chatCompletionService = kernel.GetRequiredService<IChatCo
 
 // Create the chat history
 ChatHistory chatMessages = new ChatHistory("""
-                                           You are a friendly assistant who likes to follow the rules. You will complete required steps
-                                           and request approval before taking any consequential actions. If the user doesn't provide
-                                           enough information for you to complete a task, you will keep asking questions until you have
-                                           enough information to complete the task.
+                                           Sei un assistente amichevole a cui piace seguire le regole. Completerai i passaggi richiesti
+                                           e richiedere l'approvazione prima di intraprendere qualsiasi azione consequenziale. Se l'utente non fornisce
+                                           abbastanza informazioni per completare un'attività, continuerai a fare domande finché non le avrai
+                                           informazioni sufficienti per completare l'attività.
                                            """);
 
 // Start the conversation
@@ -37,13 +47,14 @@ while (true)
     chatMessages.AddUserMessage(Console.ReadLine()!);
 
     // Get the chat completions
-    var result =  chatCompletionService.GetStreamingChatMessageContentsAsync(
+    var result = chatCompletionService.GetStreamingChatMessageContentsAsync(
         chatMessages,
         executionSettings: new HuggingFacePromptExecutionSettings
         {
             Temperature = 1,
             Details = true,
             UseCache = true,
+            
         },
         kernel: kernel);
 
