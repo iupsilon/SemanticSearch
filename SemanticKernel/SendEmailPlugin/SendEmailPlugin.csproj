@@ -20,11 +20,9 @@
       <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
       <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-      <PackageReference Include="Microsoft.SemanticKernel" Version="1.7.1" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <ProjectReference Include="D:\Studi\semantic-kernel\dotnet\src\Connectors\Connectors.HuggingFace\Connectors.HuggingFace.csproj" />
+      <PackageReference Include="Microsoft.SemanticKernel" Version="1.11.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Abstractions" Version="1.11.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.11.0" />
     </ItemGroup>
     
     <ItemGroup>

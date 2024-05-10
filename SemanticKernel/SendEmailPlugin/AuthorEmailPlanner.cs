@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Reflection;
 using Microsoft.SemanticKernel;
 
 public class AuthorEmailPlanner
@@ -8,18 +9,30 @@ public class AuthorEmailPlanner
     [return: Description("The list of steps needed to author an email")]
     public async Task<string> GenerateRequiredStepsAsync(
         Kernel kernel,
-        [Description("A 2-3 sentence description of what the email should be about")] string topic,
-        [Description("A description of the recipients")] string recipients
+        [Description("A 2-3 sentence description of what the email should be about")]
+        string topic,
+        [Description("A description of the recipients")]
+        string recipients,
+        [Description("Email address of recipients")]
+        string recipientsEmail,
+        [Description("A description of the author")]
+        string sender
     )
     {
+        Console.WriteLine($"X-- {MethodBase.GetCurrentMethod()?.Name} Topic: {topic} Recipients: {recipients} --X");
+
+
         // Prompt the LLM to generate a list of steps to complete the task
         var result = await kernel.InvokePromptAsync($"""
-                                                     XXX--- I'm going to write an email to {recipients} about {topic} on behalf of a user.
+                                                     I'm going to write an email to {recipients} ({recipientsEmail}) about {topic} on behalf of {sender}.
                                                      Before I do that, can you succinctly recommend the top 3 steps I should take in a numbered list?
                                                      I want to make sure I don't forget anything that would help my user's email sound more professional.
-                                                     """, new() {
+                                                     """, new()
+        {
             { "topic", topic },
-            { "recipients", recipients }
+            { "recipients", recipients },
+            { "recipientsEmail", recipientsEmail },
+            { "sender", sender }
         });
 
         // Return the plan back to the agent
