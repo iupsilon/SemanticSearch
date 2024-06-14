@@ -15,9 +15,9 @@ public class EmailPlugin : IPromptRenderFilter, IFunctionInvocationFilter, IAuto
         string body
     )
     {
-        if (recipientEmails.Contains("@"))
+        if (!recipientEmails.Contains("@"))
         {
-            throw new InvalidOperationException("Email non spedita perché il destinatario non è corretto");
+            throw new InvalidOperationException($"Email non spedita perché il destinatario non è corretto: {recipientEmails}");
         }
 
         // Add logic to send an email using the recipientEmails, subject, and body

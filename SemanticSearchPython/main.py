@@ -14,6 +14,7 @@ embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/gtr-t5-base
 
 CONNECTION_STRING = PGVector.connection_string_from_db_params("psycopg2","localhost",5432,"AIDB","ai","qwerty,123")
 COLLECTION_NAME = "MOVIES-SMALL"
+#COLLECTION_NAME = "BOOKS"
 
 vectorStore = PGVector(
     collection_name=COLLECTION_NAME,
@@ -24,15 +25,14 @@ vectorStore = PGVector(
 # Callbacks support token-wise streaming
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
-llm = LlamaCpp(
-    model_path ="D:\\Samples\\Gilde\\gildaRicercaSemantica\\SemanticSearch\\Models\\mistral-7b-instruct-v0.2.Q8_0.gguf",
-    # model_path="/home/yari/.cache/lm-studio/models/TheBloke/Llama-2-7B-Chat-GGUF/llama-2-7b-chat.Q8_0.gguf",    
-    temperature=0.75,
-    max_tokens=2000,
-    top_p=1,
-    callback_manager=callback_manager,
-    verbose=True
-)
+#llm = LlamaCpp(
+#    model_path ="C:\\Users\\y.melzani\\.cache\\lm-studio\\models\\TheBloke\\Mistral-7B-Instruct-v0.2-GGUF\\mistral-7b-instruct-v0.2.Q8_0.gguf",    
+#    temperature=0.9,
+#    max_tokens=2000,
+#    top_p=1,
+#    callback_manager=callback_manager,
+#    verbose=True
+#)
 
 # Prompt: https://github.com/langchain-ai/langchain/issues/11014
 prompt_template = """
@@ -47,21 +47,21 @@ PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "q
 retriever = vectorStore.as_retriever(search_type="similarity_score_threshold", search_kwargs={"k": 1, "score_threshold": 0.5})
 
 
-# qa = RetrievalQA.from_chain_type(
-#     llm,
-#     chain_type="stuff",
-#     return_source_documents=True,
-#     retriever=retriever,
-#     chain_type_kwargs={"prompt": PROMPT}
-# )
+#qa = RetrievalQA.from_chain_type(
+#    llm,
+#    chain_type="stuff",
+#    return_source_documents=True,
+#    retriever=retriever,
+#    chain_type_kwargs={"prompt": PROMPT}
+#)
 
-qb = ConversationalRetrievalChain.from_llm(
-    llm,
-    retriever,
-    combine_docs_chain_kwargs={"prompt": PROMPT},
-    return_source_documents=True,
-    verbose=True
-)
+#qb = ConversationalRetrievalChain.from_llm(
+#    llm,
+#    retriever,
+#    combine_docs_chain_kwargs={"prompt": PROMPT},
+#    return_source_documents=True,
+#    verbose=True
+#)
 
 
 # Execute the chain
@@ -75,6 +75,6 @@ while True:
         print(f"Hai inserito: {user_input}")
         docs = retriever.get_relevant_documents(query=user_input)
         print(docs)
-        if len(docs) > 0:
-            #qa.invoke(user_input)
-            qb.invoke({"question": user_input, "chat_history": ""})
+        #if len(docs) > 0:
+            #----qa.invoke(user_input)
+            #qb.invoke({"question": user_input, "chat_history": ""})

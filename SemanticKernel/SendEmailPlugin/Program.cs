@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using SendEmailPlugin;
 using SendEmailPlugin.Configuration;
 
 var configurationBuilder = new ConfigurationBuilder()
@@ -62,14 +61,14 @@ while (true)
     chatMessages.AddUserMessage(Console.ReadLine()!);
 
     // Get the chat completions
-    OpenAIPromptExecutionSettings openAIPromptExecutionSettings = new()
+    OpenAIPromptExecutionSettings openAiPromptExecutionSettings = new()
     {
         ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,
         Temperature = 1
     };
     var result = chatCompletionService.GetStreamingChatMessageContentsAsync(
         chatMessages,
-        executionSettings: openAIPromptExecutionSettings,
+        executionSettings: openAiPromptExecutionSettings,
         kernel: kernel);
 
     // Stream the results
