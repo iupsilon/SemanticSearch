@@ -15,12 +15,15 @@ var configurationBuilder = new ConfigurationBuilder()
 
 IConfiguration config = configurationBuilder.Build();
 
-var openAiConfiguration = config.GetSection("OpenAI").Get<OpenAIConfiguration>();
+//var openAiConfiguration = config.GetSection("OpenAI").Get<OpenAIConfiguration>();
+var azureOpenAiConfiguration = config.GetSection("AzureOpenAI").Get<AzureOpenAIConfiguration>();
 
 // Create the kernel
 var builder = Kernel.CreateBuilder();
 builder.Services.AddLogging(c => c.SetMinimumLevel(LogLevel.Trace).AddDebug());
-builder.Services.AddOpenAIChatCompletion(openAiConfiguration.ModelId, openAiConfiguration.ApiKey);
+builder.Services.AddAzureOpenAIChatCompletion(deploymentName: azureOpenAiConfiguration.DeploymentName, endpoint: azureOpenAiConfiguration.Endpoint, apiKey: azureOpenAiConfiguration.ApiKey);
+
+//builder.Services.AddOpenAIChatCompletion(openAiConfiguration.ModelId, openAiConfiguration.ApiKey);
 builder.Plugins.AddFromType<AuthorEmailPlanner>();
 #pragma warning disable SKEXP0001
 builder.Plugins.AddFromType<EmailPlugin>();

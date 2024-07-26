@@ -25,14 +25,14 @@ vectorStore = PGVector(
 # Callbacks support token-wise streaming
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
-#llm = LlamaCpp(
-#    model_path ="C:\\Users\\y.melzani\\.cache\\lm-studio\\models\\TheBloke\\Mistral-7B-Instruct-v0.2-GGUF\\mistral-7b-instruct-v0.2.Q8_0.gguf",    
-#    temperature=0.9,
-#    max_tokens=2000,
-#    top_p=1,
-#    callback_manager=callback_manager,
-#    verbose=True
-#)
+llm = LlamaCpp(
+    model_path ="C:\\Users\\y.melzani\\.cache\\lm-studio\\models\\TheBloke\\Mistral-7B-Instruct-v0.2-GGUF\\mistral-7b-instruct-v0.2.Q8_0.gguf",    
+    temperature=0.9,
+    max_tokens=2000,
+    top_p=1,
+    callback_manager=callback_manager,
+    verbose=True
+)
 
 # Prompt: https://github.com/langchain-ai/langchain/issues/11014
 prompt_template = """
@@ -55,13 +55,13 @@ retriever = vectorStore.as_retriever(search_type="similarity_score_threshold", s
 #    chain_type_kwargs={"prompt": PROMPT}
 #)
 
-#qb = ConversationalRetrievalChain.from_llm(
-#    llm,
-#    retriever,
-#    combine_docs_chain_kwargs={"prompt": PROMPT},
-#    return_source_documents=True,
-#    verbose=True
-#)
+qb = ConversationalRetrievalChain.from_llm(
+    llm,
+    retriever,
+    combine_docs_chain_kwargs={"prompt": PROMPT},
+    return_source_documents=True,
+    verbose=True
+)
 
 
 # Execute the chain
@@ -75,6 +75,6 @@ while True:
         print(f"Hai inserito: {user_input}")
         docs = retriever.get_relevant_documents(query=user_input)
         print(docs)
-        #if len(docs) > 0:
+        if len(docs) > 0:
             #----qa.invoke(user_input)
-            #qb.invoke({"question": user_input, "chat_history": ""})
+            qb.invoke({"question": user_input, "chat_history": ""})
