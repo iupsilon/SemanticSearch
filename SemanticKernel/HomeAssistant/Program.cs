@@ -21,10 +21,13 @@ var azureOpenAiConfiguration = config.GetSection("AzureOpenAI").Get<AzureOpenAIC
 
 // Create the kernel
 var builder = Kernel.CreateBuilder();
-builder.Services.AddLogging(c => c.SetMinimumLevel(LogLevel.Trace).AddDebug());
+builder.Services.AddLogging(c => c.SetMinimumLevel(LogLevel.Information).AddDebug().AddConsole());
 builder.Services.AddAzureOpenAIChatCompletion(deploymentName: azureOpenAiConfiguration.DeploymentName, endpoint: azureOpenAiConfiguration.Endpoint, apiKey: azureOpenAiConfiguration.ApiKey);
 
 builder.Plugins.AddFromType<LightsPlugin>("Lights");
+builder.Plugins.AddFromType<TemperaturePlugin>("Temperature");
+builder.Plugins.AddFromType<SmokeDetectorPlugin>("SmokeDetector");
+builder.Plugins.AddFromType<FirePreventionPlugin>("FirePrevention");
 var kernel = builder.Build();
 
 var chatCompletionService = kernel.GetRequiredService<IChatCompletionService>();
@@ -36,6 +39,10 @@ OpenAIPromptExecutionSettings openAIPromptExecutionSettings = new()
 };
 
 var history = new ChatHistory();
+
+history.AddMessage(AuthorRole.System, @"Sei un assistente gentile e preciso. Hai il compito di gestire l'automazione della casa. 
+Assicurati che quando il padrone è in casa ci sia la luce più indicata in base all'attività in corso. 
+I residenti della casa preferiscono avere una temperatura media intorno ai 21 gradi centigradi; assicurati che la temperatura nelle varie stanze sia sempre gradevole ma mai superiore ai 23 gradi");
 
 string userInput;
 do
