@@ -78,7 +78,7 @@ while (true)
     string fullMessage = "";
     await foreach (var content in result)
     {
-        if (content.Role.HasValue)
+        if (content.)
         {
             System.Console.Write("Assistant > ");
         }

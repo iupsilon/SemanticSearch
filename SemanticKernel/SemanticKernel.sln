@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendEmailPlugin", "SendEmai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssistantsCollaboration", "AssistantsCollaboration\AssistantsCollaboration.csproj", "{F01BF500-3788-4301-80B1-BD608063F918}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeAssistant", "HomeAssistant\HomeAssistant.csproj", "{BDB39ADA-7F7D-4656-9F60-1F875AFE7AC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{F01BF500-3788-4301-80B1-BD608063F918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F01BF500-3788-4301-80B1-BD608063F918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F01BF500-3788-4301-80B1-BD608063F918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDB39ADA-7F7D-4656-9F60-1F875AFE7AC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDB39ADA-7F7D-4656-9F60-1F875AFE7AC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDB39ADA-7F7D-4656-9F60-1F875AFE7AC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDB39ADA-7F7D-4656-9F60-1F875AFE7AC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
