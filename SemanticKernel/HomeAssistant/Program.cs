@@ -20,13 +20,9 @@ IConfiguration config = configurationBuilder.Build();
 var builder = Kernel.CreateBuilder();
 
 builder.Services.AddLogging(c => c.SetMinimumLevel(LogLevel.Debug).AddDebug().AddConsole());
-//builder.Services.AddAzureOpenAIChatCompletion(deploymentName: azureOpenAiConfiguration.DeploymentName, endpoint: azureOpenAiConfiguration.Endpoint, apiKey: azureOpenAiConfiguration.ApiKey);
 #pragma warning disable SKEXP0010
 builder.Services.AddOpenAIChatCompletion(modelId: "Model", endpoint: new Uri("http://localhost:1234"), apiKey: "XXXXXXXXXXXXXX");
 #pragma warning restore SKEXP0010
-
-//builder.Services.AddGoogleAIGeminiChatCompletion(modelId: "gemini-flash-lite-latest", apiKey:"AIzaSyCl7VAVcTTlkCqmNKBTC63t6G5WBL5k48E");
-    
 
 builder.Plugins.AddFromType<LightsPlugin>("Lights");
 builder.Plugins.AddFromType<TemperaturePlugin>("Temperature");
